@@ -14,42 +14,17 @@
       </thead>
       <tbody>
       <tr :key="movie.Movie_id" v-for="movie in movies">
-        <td v-if="editing === movie.Movie_id">
-          <input type="text" v-model="movie.Name" />
-        </td>
-        <td v-else>{{movie.Name}}</td>
-
-        <td v-if="editing === movie.Movie_id">
-          <input type="text" v-model="movie.Genre" />
-        </td>
-        <td v-else>{{movie.Genre}}</td>
-
-        <td v-if="editing === movie.Movie_id">
-          <input type="text" v-model="movie.Duration" />
-        </td>
-        <td v-else>{{movie.Duration}}</td>
-
-        <td v-if="editing === movie.Movie_id">
-          <input type="text" v-model="movie.Rating" />
-        </td>
-        <td v-else>{{movie.Rating}}</td>
-
-        <td v-if="editing === movie.Movie_id">
-          <input type="checkbox" v-model="movie.is_watched.checked" v-if="movie.is_watched" checked/>
-          <input type="checkbox" v-model="movie.is_watched" v-else/>
-        </td>
-        <td v-else>
+        <td>{{movie.Name}}</td>
+        <td>{{movie.Genre}}</td>
+        <td>{{movie.Duration}}</td>
+        <td>{{movie.Rating}}</td>
+        <td>
           <span v-if="movie.is_watched">Yes</span>
           <span v-else>No</span>
         </td>
 
-
-        <td v-if="editing === movie.Movie_id">
-          <button class="btn btn-primary" @click="editMovie(movie)">Save</button>
-          <button class="btn btn-primary" @click="cancelEdit(movie)">Cancel</button>
-        </td>
-        <td v-else>
-          <button class="btn btn-primary" @click="editMode(movie)">Edit</button>
+        <td>
+          <button class="btn btn-primary" @click="editMode(movie)">Watched</button>
           <button class="btn btn-primary" @click="$emit('delete:movie', movie.Movie_id)">Delete</button>
         </td>
       </tr>
