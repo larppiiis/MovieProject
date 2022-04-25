@@ -1,10 +1,10 @@
 <template>
   <div id="movie-form">
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="exampleModalLabel">Add new movie</h5>
+        <h5 class="modal-title text-danger" id="movieModalLabel">Add new movie</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -116,14 +116,6 @@ export default {
       this.success = false
       this.error = false
     },
-    watchedFilm(){
-      if (this.movie.is_watched === ''){
-        return this.movie.is_watched = 0;
-      }
-      else {
-        return this.movie.is_watched = 1;
-      }
-    }
   },
   computed: {
     invalidName() {

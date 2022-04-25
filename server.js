@@ -165,6 +165,62 @@ app.post("/api/addMovie",urlencodedParser, function(req,res){
   }
 });
 
+//KESKEN
+//Jos elokuva on katsottu päivitetään kaikki taulut
+//Haku pitää olla mallia localhost:8081/api/editMovie?place="Paikka"&date="2020-01-01"&id=1
+app.put("/api/editMovie",urlencodedParser, function(req,res){
+  console.log("body: %j", req.body);
+  var q = url.parse(req.url, true).query;
+  var movieid = q.id;
+  var place = q.place;
+  var date = q.date;
+  var rating = q.rating;
+  var comments = q.comments;
+  var string;
+  var alteredResult;
+
+  sql = "UPDATE View SET Place = ?, Date = ?"
+      + "WHERE Movie_id = ?";
+
+  (async () => { // IIFE (Immediately Invoked Function Expression)
+    try {
+      const rows = await query(sql, [place, date, movieid]);
+      string = JSON.stringify(rows);
+      alteredResult = '{"Updated movie with id":' + movieid + ',"rows":' +
+          string + '}';
+      console.log(alteredResult);
+      res.send(rows);
+    }
+    catch (err) {
+      console.log("Update was not succesful!"+ err);
+    }
+  })()
+
+
+
+    (async() =>{
+      try {
+        const result1 = await query(sql, [
+          jsonObj.Name, jsonObj.Genre, jsonObj.Duration, jsonObj.Description, jsonObj.Release_date, jsonObj.is_watched]);
+
+        let insertedMovieId = result1.insertId;
+
+        const result2 = await query(sql,
+            [jsonObj.Place, jsonObj.Date, insertedMovieId]);
+
+        let insertedViewId = result2.insertId;
+
+        sql = "INSERT INTO Rating (Rating, Comments, View_id)"
+            + " VALUES ( ?, ?, ?)";
+        await query(sql, [jsonObj.Rating, jsonObj.Comments, insertedViewId]);
+        res.send(req.body);
+      }catch (err) {
+        console.log("Insertion into some (2) table was unsuccessful!" + err);
+        res.send("POST was not succesful " + err);
+      }
+    })()
+});
+
 //Poistaa elokuvan (ja muut taulut)
 app.delete("/api/delete/:movie_id",function(req,res){
   console.log("Delete movie");
@@ -205,7 +261,7 @@ app.put("/api/update",function(req,res){
       string = JSON.stringify(rows);
       alteredResult = '{"Updated movie with id":' + movieid + ',"rows":' +
           string + '}';
-      console.log(rows);
+      console.log(alteredResult);
       res.send(rows);
     }
     catch (err) {

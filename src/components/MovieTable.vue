@@ -24,7 +24,12 @@
         </td>
 
         <td>
-          <button class="btn btn-primary" @click="editMode(movie)">Watched</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#watchedModal" @click="watchedMovie(movie)" v-if="movie.is_watched === 0">
+            Watched
+          </button>
+          <button type="button" class="btn btn-primary" @click="unWatchedMovie(movie)" v-if="movie.is_watched === 1">
+            Unwatched
+          </button>
           <button class="btn btn-primary" @click="$emit('delete:movie', movie.Movie_id)">Delete</button>
         </td>
       </tr>
@@ -45,18 +50,14 @@ export default {
     }
   },
   methods: {
-    editMode(movie) {
-      this.cachedMovie = Object.assign({}, movie)
-      this.editing = movie.Movie_id
-    },
-    cancelEdit(movie) {
-      Object.assign(movie, this.cachedMovie)
-      this.editing = null;
-    },
-
-    editMovie(movie) {
+    watchedMovie(movie) {
       if (movie.Name === '' || movie.Genre === '' || movie.Duration === '' || movie.is_watched === '') return
       this.$emit('edit:movie', movie.Movie_id, movie)
+      this.editing = null
+    },
+    unWatchedMovie(movie) {
+      if (movie.Name === '' || movie.Genre === '' || movie.Duration === '' || movie.is_watched === '') return
+      this.$emit('edit2:movie', movie.Movie_id, movie)
       this.editing = null
     }
   }
