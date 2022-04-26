@@ -1,7 +1,7 @@
 <template>
   <!-- Tän divin voi poistaa, kun muokkaa sivun ulkoasua -->
   <div class="container p-5">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#movieModal">
       Add Movie
     </button>
 
@@ -9,7 +9,7 @@
   <movie-table
       :movies="movies"
       @delete:movie="deleteMovie"
-      @edit:movie="watchedMovie"
+      @edit:movie="WatchedMovie"
       @edit2:movie="unWatchedMovie"
   />
   </div>
@@ -75,15 +75,14 @@ export default {
     },
     async watchedMovie(Movie_id, updatedMovie) {
       try {
-        const response = await fetch(`http://localhost:8081/api/update?watched=1&id=${Movie_id}`, {
+        const response = await fetch(`http://localhost:8081/api/movies/watched/${Movie_id}`, {
           method: 'PUT',
           body: JSON.stringify(updatedMovie),
           headers: { "Content-type": "application/json" }
         })
         const data = await response.json()
         this.movies = this.movies.map(movie => movie.Movie_id === Movie_id ? data : movie)
-        //VÄLIAIKAINEN VAIHTOEHTO
-        this.movies = this.getMovies();
+
 
       } catch (error) {
         console.error(error)
@@ -91,7 +90,7 @@ export default {
     },
     async unWatchedMovie(Movie_id, updatedMovie) {
       try {
-        const response = await fetch(`http://localhost:8081/api/update?watched=0&id=${Movie_id}`, {
+        const response = await fetch(`http://localhost:8081/api/movies/unwatched?id=${Movie_id}`, {
           method: 'PUT',
           body: JSON.stringify(updatedMovie),
           headers: { "Content-type": "application/json" }
