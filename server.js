@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'Zorro',
   database: 'moviedb',
 });
 
