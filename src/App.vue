@@ -9,13 +9,12 @@
   <movie-table
       :movies="movies"
       @delete:movie="deleteMovie"
-      @edit:movie="WatchedMovie"
       @edit2:movie="unWatchedMovie"
+      @edit:movie="watchedMovie"
   />
   </div>
   <watched-form
       @edit:movie="watchedMovie"
-      @edit2:movie="unWatchedMovie"
       />
 </template>
 <script>
@@ -24,7 +23,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import MovieTable from '@/components/MovieTable.vue';
 import MovieForm from '@/components/MovieForm.vue';
-import WatchedForm from '@/components/WatchedForm';
+import WatchedForm from '@/components/WatchedForm.vue';
 
 export default {
   components: {
@@ -82,8 +81,7 @@ export default {
         })
         const data = await response.json()
         this.movies = this.movies.map(movie => movie.Movie_id === Movie_id ? data : movie)
-
-
+        this.movies = this.getMovies();
       } catch (error) {
         console.error(error)
       }
@@ -101,7 +99,7 @@ export default {
       } catch (error) {
         console.error(error)
       }
-    }
+    },
   }
 }
 </script>

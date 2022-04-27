@@ -9,7 +9,7 @@
           </div>
           <div class="modal-body">
             <form @submit.prevent="handleSubmit">
-              <div id="watched-form1">{{movie.Movie_id}}</div>
+              <div id="watched-form1">{{movie.movie_id}}</div>
               <div class="mb-3">
                 <label class="form-label">Place</label>
                 <input ref="first"
@@ -83,7 +83,7 @@ export default {
         Genre: '',
         Duration: '',
         Rating: '',
-        is_watched: ''
+        is_watched: '',
 
       }
     }

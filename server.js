@@ -35,7 +35,7 @@ con.connect(function(err){
 });
 
 //Elokuvan haku nimen perusteella
-app.get("/api/movies/name", function(req,res){
+app.get("/api/movies", function(req,res){
   console.log("Select movies by name");
   var q = url.parse(req.url, true).query;
   var name = q.name;
@@ -176,14 +176,14 @@ app.put("/api/movies/watched/:movie_id",urlencodedParser, function(req,res){
 
   (async () => { // IIFE (Immediately Invoked Function Expression)
     try {
-      console.log(movieid);
       await query(makeWatched, movieid);
 
-      sql = "UPDATE View SET Place = ?, Date = ?"
-          + "WHERE Movie_id = ?";
+      sql = "UPDATE View SET Place = ?, Date = ? WHERE Movie_id = ?";
       await query(sql, [jsonObj.Place, jsonObj.Date, movieid]);
       const viewidquery = await query("SELECT View_id FROM View WHERE Movie_id = ?", movieid)
+      console.log(viewidquery);
       let viewid = viewidquery[0].View_id
+
       sql = "INSERT INTO Rating (Rating, Comments, View_id)"
           + " VALUES ( ?, ?, ?)";
       await query(sql, [jsonObj.Rating, jsonObj.Comments, viewid ]);
@@ -278,67 +278,6 @@ app.put("/api/movies/unwatched",function(req,res){
     }
   })()
 });
-/*
-app.get("/events", function(req,res){
-  res.sendFile(path.join(__dirname + "/server.html"));
-});
-
-app.post("/api/movie",urlencodedParser, function(req,res){
-  console.log("body: %j", req.body);
-  // get JSON-object from the http-body
-  let jsonObj = req.body;
-  console.log("Arvo: "+jsonObj.Name);
-
-
-  //Jos id on suurempi kuin -1,päivitetään vain view ja rating
-  if(jsonObj.Movie_id>-1) {
-    var sql = "INSERT INTO View (Place, Date, Movie_id)"
-        + "VALUES (?, ?, ?)";
-    (async () => {
-      try {
-        const result = await query(sql,
-            [jsonObj.Place, jsonObj.Date, jsonObj.Movie_id]);
-        let insertedId = result.insertId;
-        sql = "INSERT INTO Rating (Rating, Comments, View_id)"
-            + " VALUES ( ?, ?, ?)";
-        await query(sql, [jsonObj.Rating, jsonObj.Comments, insertedId]);
-        res.send("POST succesful " + req.body);
-      } catch (err) {
-        console.log("Insertion into some (2) table was unsuccessful!" + err);
-        res.send("POST was not succesful " + err);
-      }
-
-    })()
-  }
-  //Jos id on -1, päivitetään kaikki taulut
-  else {
-    sql = "INSERT INTO Movie (Name, Genre, Duration, Description, Release_date, is_watched)"
-        + "VALUES (?, ?, ?, ?, ?, ?)";
-    (async() =>{
-      try {
-        const resultLocation = await query(sql, [
-          jsonObj.Name, jsonObj.Genre, jsonObj.Duration, jsonObj.Description, jsonObj.Release_date, jsonObj.is_watched]);
-
-        let insertedMovieId = resultLocation.insertId;
-        sql = "INSERT INTO View (Place, Date, Movie_id)"
-            + "VALUES (?, ?, ?)";
-        const resultEvent = await query(sql,
-            [jsonObj.Place, jsonObj.Date, insertedMovieId]);
-
-        let insertedViewId = resultEvent.insertId;
-
-        sql = "INSERT INTO Rating (Rating, Comments, View_id)"
-            + " VALUES ( ?, ?, ?)";
-        await query(sql, [jsonObj.Rating, jsonObj.Comments, insertedViewId]);
-        res.send("POST succesful " + req.body);
-      }catch (err) {
-        console.log("Insertion into some (2) table was unsuccessful!" + err);
-        res.send("POST was not succesful " + err);
-      }
-    })()
-  }
-});
-*/
 var server = app.listen(8081, function () {
   var host = server.address().address
   var port = server.address().port

@@ -1,4 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import moment from 'moment'
+
+const app = createApp(App)
+app.config.globalProperties.$moment = moment
+
+app.use(App).mount('#app')
