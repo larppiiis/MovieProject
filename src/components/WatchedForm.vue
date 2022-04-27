@@ -1,4 +1,5 @@
 <template>
+  <!-- TÄMÄ TURHA, TOISTAISEKSI JÄTETTY-->
   <div id="watched-form">
     <div class="modal fade" id="watchedModal" tabindex="-1" aria-labelledby="watchedModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -9,7 +10,7 @@
           </div>
           <div class="modal-body">
             <form @submit.prevent="handleSubmit">
-              <div id="watched-form1">{{movie.movie_id}}</div>
+              <div id="watched-form1">{{ movie.movie_id }}</div>
               <div class="mb-3">
                 <label class="form-label">Place</label>
                 <input ref="first"
@@ -18,7 +19,6 @@
                        @focus="clearStatus"
                        @keypress="clearStatus"
                        class="form-control"
-
                 />
               </div>
               <div class="mb-3">
@@ -85,44 +85,44 @@ export default {
         Rating: '',
         is_watched: '',
 
-      }
-    }
+      },
+    };
   },
   methods: {
     handleSubmit() {
-      this.clearStatus()
-      this.submitting = true
+      this.clearStatus();
+      this.submitting = true;
 
-      if (this.invalidRating ) {
-        this.error = true
-        return
+      if (this.invalidRating) {
+        this.error = true;
+        return;
       }
 
-      this.$emit('edit:movie', this.movie)
-      this.$refs.first.focus()
+      this.$emit('edit:movie', this.movie);
+      this.$refs.first.focus();
       this.movie = {
         Name: '',
         Genre: '',
         Duration: '',
         Rating: '',
-        is_watched: ''
-      }
-      this.error = false
-      this.success = true
-      this.submitting = false
+        is_watched: '',
+      };
+      this.error = false;
+      this.success = true;
+      this.submitting = false;
     },
 
     clearStatus() {
-      this.success = false
-      this.error = false
+      this.success = false;
+      this.error = false;
     },
   },
   computed: {
     invalidRating() {
-      return this.movie.Rating === ''
-    }
+      return this.movie.Rating === '';
+    },
   },
-}
+};
 </script>
 
 <style scoped>

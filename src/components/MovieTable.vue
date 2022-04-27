@@ -17,16 +17,16 @@
       </tr>
       </thead>
       <tbody>
-      <tr :key="movie.Movie_id" v-for="movie in movies " >
+      <tr :key="movie.Movie_id" v-for="movie in movies ">
 
-        <td>{{movie.Name}}</td>
-        <td>{{movie.Genre}}</td>
-        <td>{{movie.Duration}}h</td>
+        <td>{{ movie.Name }}</td>
+        <td>{{ movie.Genre }}</td>
+        <td>{{ movie.Duration }}h</td>
 
         <td v-if="!movie.Release_date"></td>
-        <td v-else>{{$moment(movie.Release_date).format("DD-MM-YYYY") }}</td>
+        <td v-else>{{ $moment(movie.Release_date).format('DD-MM-YYYY') }}</td>
 
-        <td>{{movie.Description}}</td>
+        <td>{{ movie.Description }}</td>
 
         <td v-if="editing === movie.Movie_id">
           <input
@@ -36,19 +36,19 @@
               v-model="movie.Rating"
           >
         </td>
-        <td v-else>{{movie.Rating}}</td>
+        <td v-else>{{ movie.Rating }}</td>
         <td v-if="editing === movie.Movie_id">
           <input
               type="text"
               v-model="movie.Place"
           >
         </td>
-        <td v-else>{{movie.Place}}</td>
+        <td v-else>{{ movie.Place }}</td>
 
         <td v-if="editing === movie.Movie_id">
           <textarea v-model="movie.Comments" placeholder="Add your comment"></textarea>
         </td>
-        <td v-else>{{movie.Comments}}</td>
+        <td v-else>{{ movie.Comments }}</td>
 
         <td v-if="editing !== movie.Movie_id">
           <span v-if="movie.is_watched">Yes</span>
@@ -60,7 +60,8 @@
           <button
               class="btn btn-primary"
               @click="cancelEdit(movie)"
-          >Cancel</button>
+          >Cancel
+          </button>
         </td>
         <td v-else>
           <button type="button" class="btn btn-primary" @click="unWatchedMovie(movie)" v-if="movie.is_watched === 1">
@@ -72,7 +73,6 @@
           <button class="btn btn-primary" @click="$emit('delete:movie', movie.Movie_id)">Delete</button>
         </td>
       </tr>
-
       </tbody>
     </table>
   </div>
@@ -83,35 +83,35 @@
 export default {
   name: 'movie-table',
   props: {
-    movies: Array
+    movies: Array,
   },
   data() {
     return {
       editing: null,
-    }
+    };
   },
   methods: {
     editMode(movie) {
-      this.cachedMovie = Object.assign({}, movie)
-      this.editing = movie.Movie_id
+      this.cachedMovie = Object.assign({}, movie);
+      this.editing = movie.Movie_id;
     },
 
     cancelEdit(movie) {
-      Object.assign(movie, this.cachedMovie)
+      Object.assign(movie, this.cachedMovie);
       this.editing = null;
     },
     watchedMovie(movie) {
-      if (movie.Rating === '' || movie.Place === '') return
-      this.$emit('edit:movie', movie.Movie_id, movie)
-      this.editing = null
+      if (movie.Rating === '' || movie.Place === '') return;
+      this.$emit('edit:movie', movie.Movie_id, movie);
+      this.editing = null;
     },
     unWatchedMovie(movie) {
-      if (movie.Name === '' || movie.Genre === '' || movie.Duration === '' || movie.is_watched === '') return
-      this.$emit('edit2:movie', movie.Movie_id, movie)
-      this.editing = null
+      if (movie.Name === '' || movie.Genre === '' || movie.Duration === '' || movie.is_watched === '') return;
+      this.$emit('edit2:movie', movie.Movie_id, movie);
+      this.editing = null;
     },
   },
-}
+};
 
 </script>
 
