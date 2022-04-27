@@ -35,7 +35,7 @@ con.connect(function(err) {
 });
 
 //Elokuvan haku nimen perusteella
-app.get('/api/movies', function(req, res) {
+app.get('/api/movies/name', function(req, res) {
   console.log('Select movies by name');
   var q = url.parse(req.url, true).query;
   var name = q.name;
