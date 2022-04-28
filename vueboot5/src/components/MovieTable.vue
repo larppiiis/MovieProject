@@ -63,7 +63,7 @@
           >Cancel
           </button>
         </td>
-        <td v-else>
+        <td v-else id="buttons">
           <button type="button" class="btn btn-primary" @click="unWatchedMovie(movie)" v-if="movie.is_watched === 1">
             Unwatched
           </button>

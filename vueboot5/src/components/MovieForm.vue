@@ -1,4 +1,5 @@
 <template>
+
   <div id="movie-form">
     <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
       <div class="modal-dialog">

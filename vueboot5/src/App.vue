@@ -1,8 +1,11 @@
+
 <template>
+
   <!-- Tän divin voi poistaa, kun muokkaa sivun ulkoasua -->
   <div class="container p-5">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#movieModal">
-      Add Movie
+    <h1></h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#movieModal" id="add-movie-button">
+
     </button>
 
     <movie-form @add:movie="addMovie"/>
@@ -18,13 +21,13 @@
   />
 </template>
 <script>
+
 //importing bootstrap 5
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import MovieTable from '@/components/MovieTable.vue';
-import MovieForm from '@/components/MovieForm.vue';
-import WatchedForm from '@/components/WatchedForm.vue';
-
+import MovieTable from './components/MovieTable.vue';
+import MovieForm from './components/MovieForm.vue';
+import WatchedForm from './components/WatchedForm.vue';
 export default {
   components: {
     MovieTable,
@@ -102,4 +105,6 @@ export default {
     },
   },
 };
+
 </script>
+<style src="./style.css"> </style>
