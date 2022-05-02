@@ -106,3 +106,6 @@ textarea{
     margin:10px;
     max-width: 100px;
 }
+h2{
+    background: url("./assets/pop11.png")center no-repeat;
+}
