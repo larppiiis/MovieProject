@@ -54,14 +54,14 @@ h1{
     text-align: center;
     background: url("./assets/popcorn-time5.png") center no-repeat;
     height: 400px;
-    margin: -55px 0 -205px 0;
+    margin: -55px 0 -223px 0;
 }
 #add-movie-button{
     background: url("./assets/pop9-1.png") center no-repeat;
     border: none;
     width:160px;
     height: 150px;
-    margin: 0 0 -5px 120px;
+    margin: 0 0 3px 110px;
     text-shadow: 0 0 3px grey, 0 0 5px grey;
     font-size: 20px;
     color: black;
@@ -109,3 +109,67 @@ textarea{
 h2{
     background: url("./assets/pop11.png")center no-repeat;
 }
+
+.modal-content{
+    font-weight: bold;
+    background: rgba(234,240,240,0.93);
+}
+
+.modal-content label{
+    width:130px;
+    color: #DB202C;
+    text-shadow: 0 0 3px white
+}
+#submitbutton{
+    background: url("./assets/pop9-2.png")center no-repeat;
+    border: none;
+    width:90px;
+    height: 90px;
+    display: inline-block;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+#closebutton{
+    background: url("./assets/kernel1.png")center no-repeat;
+    border: none;
+    width:60px;
+    height: 40px;
+    display: inline-block;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+.mb-3{
+
+}
+
+label:before{
+    height:2px;
+    width:20px;
+    background:white;
+    display:inline-block;
+    content:"";
+    box-shadow:0px -5px 0px 0px  white,
+    0px -10px 0px 0px white;
+    margin-right:10px;
+    transition:all .5s;
+    position:relative;
+    opacity:0.5;
+}
+input[type="checkbox"]{
+
+}
+#collapse:not(:checked) ~ #collapsible{
+    display:none;
+    margin-top:0;
+}
+#collapse:checked + label:before{
+    position:relative;
+    right:calc(-160px);
+    opacity:1;
+
+}
+
