@@ -50,7 +50,7 @@
         </td>
         <td v-else>{{ movie.Comments }}</td>
 
-        <td v-if="editing !== movie.Movie_id">
+        <td>
           <span v-if="movie.is_watched">Yes</span>
           <span v-else>No</span>
         </td>
