@@ -101,12 +101,13 @@ export default {
       this.editing = null;
     },
     watchedMovie(movie) {
-      if (movie.Rating === '' || movie.Place === '') return;
+      if (movie.Rating === '' || movie.Place === '' || movie.Date === '' || movie.Comments === '') return;
       this.$emit('edit:movie', movie.Movie_id, movie);
       this.editing = null;
     },
     unWatchedMovie(movie) {
-      if (movie.Name === '' || movie.Genre === '' || movie.Duration === '' || movie.is_watched === '') return;
+      if (movie.Name === '' || movie.Genre === '' || movie.Duration === '' || movie.Release_date === ''
+          || movie.Description === '' || movie.is_watched === '') return;
       this.$emit('edit2:movie', movie.Movie_id, movie);
       this.editing = null;
     },

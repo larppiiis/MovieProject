@@ -9,6 +9,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+
+<!--            Input-kentät uuden elokuvan lisäämiseksi-->
+
             <form @submit.prevent="handleSubmit">
               <div class="mb-3">
                 <label>Movie name</label>
@@ -39,14 +42,28 @@
                 />
               </div>
               <div class="mb-3">
-                <label>Rating</label>
+                <label>Description</label>
                 <input
                     type="text"
-                    :class="{ 'has-error': submitting }"
-                    v-model="movie.Rating"
+                    :class="{ 'has-error': submitting && invalidDescription }"
+                    v-model="movie.Description"
                     @focus="clearStatus"
                 />
               </div>
+
+              <div class="mb-3">
+                <label>Release date</label>
+                <input
+                    type="date"
+                    format="dd/MM/yyyy"
+                    value-format="dd-MM-yyyy"
+                    :class="{ 'has-error': submitting && invalidRelease }"
+                    v-model="movie.Release_date"
+                    @focus="clearStatus"
+                />
+              </div>
+
+              <!--Mikäli elokuva on jo katsottu, checkboksista pääsee täyttämään arvostelun-->
 
               <div class="mb-3">
                 <label>Watched?</label>
@@ -58,20 +75,45 @@
                     v-model="movie.is_watched"
                     @focus="clearStatus"
                 />
+
                 <div id="collapsible">
 
-                  <label>testi</label>
-                  <input
-                      type="text"
-                      :class="{ 'has-error': submitting }"
-                      v-model="movie.Rating"
-                      @focus="clearStatus"
-                  />
+                  <div class="mb-3">
+                    <label class="form-label">Place</label>
+                    <input ref="first"
+                           type="text"
+                           v-model="movie.Place"
+                           @focus="clearStatus"
+                           @keypress="clearStatus"
+                           class="form-control"
 
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input
+                        type="Date"
+                        v-model="movie.Date"
+                        @focus="clearStatus"
+                        class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Rating 1-5</label>
+                    <input
+                        type="number"
+                        min="1"
+                        max="5"
+                        :class="{ 'has-error': submitting && invalidRating}" class="form-control"
+                        v-model="movie.Rating"
+                        @focus="clearStatus"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Comments</label>
+                    <textarea class="form-control" v-model="movie.Comments" @focus="clearStatus"></textarea>
+                  </div>
                 </div>
-
-
-
               </div>
 
               <p v-if="error && submitting" class="error-message">❗Please fill out all required fields</p>
@@ -100,9 +142,9 @@ export default {
         Name: '',
         Genre: '',
         Duration: '',
-        Rating: '',
+        Description: '',
+        Release_date: '',
         is_watched: '',
-
       },
     };
   },
@@ -111,7 +153,7 @@ export default {
       this.clearStatus();
       this.submitting = true;
 
-      if (this.invalidName || this.invalidGenre || this.invalidDuration) {
+      if (this.invalidName || this.invalidGenre || this.invalidDuration || this.invalidDescription || this.invalidRelease) {
         this.error = true;
         return;
       }
@@ -122,7 +164,8 @@ export default {
         Name: '',
         Genre: '',
         Duration: '',
-        Rating: '',
+        Description: '',
+        Release_date: '',
         is_watched: '',
       };
       this.error = false;
@@ -137,14 +180,19 @@ export default {
   },
   computed: {
     invalidName() {
-      return this.movie.Name === '';
+      return this.movie.Name === ''
     },
-
     invalidGenre() {
-      return this.movie.Genre === '';
+      return this.movie.Genre === ''
     },
     invalidDuration() {
-      return this.movie.Duration === '';
+      return this.movie.Duration === ''
+    },
+    invalidDescription() {
+      return this.movie.Description === ''
+    },
+    invalidRelease() {
+      return this.movie.Release_date === ''
     },
   },
 };
@@ -164,6 +212,7 @@ form {
 }
 
 .success-message {
+
   color: #32a95d;
 }
 </style>
