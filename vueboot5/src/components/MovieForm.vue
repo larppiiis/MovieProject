@@ -1,10 +1,11 @@
 <template>
+
   <div id="movie-form">
     <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-danger" id="movieModalLabel">Add new movie</h5>
+            <h5 class="modal-title text-danger" id="movieModalLabel">Add a new movie</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -46,23 +47,40 @@
                     @focus="clearStatus"
                 />
               </div>
+
               <div class="mb-3">
                 <label>Watched?</label>
+
                 <input
                     type="checkbox"
+                    id="collapse"
                     :class="{ 'has-error': submitting}"
                     v-model="movie.is_watched"
                     @focus="clearStatus"
                 />
+                  <div id="collapsible">
+
+                    <label>testi</label>
+                    <input
+                        type="text"
+                        :class="{ 'has-error': submitting }"
+                        v-model="movie.Rating"
+                        @focus="clearStatus"
+                    />
+
+                </div>
+
+
+
               </div>
 
               <p v-if="error && submitting" class="error-message">❗Please fill out all required fields</p>
               <p v-if="success" class="success-message">✅ Movie successfully added</p>
-              <button type="submit" class="btn btn-primary">Add Movie</button>
+              <button type="submit" id="submitbutton" class="btn btn-primary"></button>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="closebutton" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

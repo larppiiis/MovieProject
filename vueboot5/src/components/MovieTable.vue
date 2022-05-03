@@ -50,7 +50,7 @@
         </td>
         <td v-else>{{ movie.Comments }}</td>
 
-        <td v-if="editing !== movie.Movie_id">
+        <td>
           <span v-if="movie.is_watched">Yes</span>
           <span v-else>No</span>
         </td>
@@ -63,7 +63,7 @@
           >Cancel
           </button>
         </td>
-        <td v-else>
+        <td v-else id="buttons">
           <button type="button" class="btn btn-primary" @click="unWatchedMovie(movie)" v-if="movie.is_watched === 1">
             Unwatched
           </button>

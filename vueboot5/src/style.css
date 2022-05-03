@@ -1,0 +1,175 @@
+head{
+
+}
+body{
+    background-color: #242526;
+}
+
+#movie-table table{
+    display: block;
+    border-collapse: collapse;
+    text-align: center;
+
+}
+#movie-table th{
+
+    background-color: #DB202C;
+}
+
+#movie-table tr{
+    padding: 20px 30px;
+    max-width: min-content;
+}
+#movie-table td{
+    padding: 20px 0px;
+    max-width: min-content;
+}
+#movie-table td:nth-child(-n+4){
+    padding: 20px 30px;
+    max-width: min-content;
+}
+
+
+#movie-table th:nth-child(-n+8){
+    padding: 25px 30px;
+}
+
+#movie-table th:nth-child(10){
+    padding: 0 0 0 37px
+}
+
+#movie-table tr:nth-child(odd) {
+    background-color: white;
+    max-width: max-content;
+}
+
+#movie-table tr:nth-child(even) {
+    background: #DB202C;
+    max-width: max-content;
+    color: white;
+}
+
+h1{
+    position:relative;
+    text-align: center;
+    background: url("./assets/popcorn-time5.png") center no-repeat;
+    height: 400px;
+    margin: -55px 0 -223px 0;
+}
+#add-movie-button{
+    background: url("./assets/pop9-1.png") center no-repeat;
+    border: none;
+    width:160px;
+    height: 150px;
+    margin: 0 0 3px 110px;
+    text-shadow: 0 0 3px grey, 0 0 5px grey;
+    font-size: 20px;
+    color: black;
+    position: relative;
+}
+#movie-table button:first-child{
+    background: url("./assets/corn1.png");
+    border: none;
+    width:60px;
+    height: 40px;
+    display: inline-block;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+#movie-table button:nth-child(2){
+    background: url("./assets/kernel1.png")center no-repeat;
+    border: none;
+    width:60px;
+    height: 40px;
+    display: inline-block;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+
+#buttons{
+    display: flex;
+}
+*, ::after, ::before {
+    box-sizing: content-box;
+
+}
+#matti{
+    background-color: #32a95d;
+}
+input{
+    max-width: 100px;
+    margin:10px;
+}
+textarea{
+    margin:10px;
+    max-width: 100px;
+}
+h2{
+    background: url("./assets/pop11.png")center no-repeat;
+}
+
+.modal-content{
+    font-weight: bold;
+    background: rgba(234,240,240,0.93);
+}
+
+.modal-content label{
+    width:130px;
+    color: #DB202C;
+    text-shadow: 0 0 3px white
+}
+#submitbutton{
+    background: url("./assets/pop9-2.png")center no-repeat;
+    border: none;
+    width:90px;
+    height: 90px;
+    display: inline-block;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+#closebutton{
+    background: url("./assets/kernel1.png")center no-repeat;
+    border: none;
+    width:60px;
+    height: 40px;
+    display: inline-block;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+.mb-3{
+
+}
+
+label:before{
+    height:2px;
+    width:20px;
+    background:white;
+    display:inline-block;
+    content:"";
+    box-shadow:0px -5px 0px 0px  white,
+    0px -10px 0px 0px white;
+    margin-right:10px;
+    transition:all .5s;
+    position:relative;
+    opacity:0.5;
+}
+input[type="checkbox"]{
+
+}
+#collapse:not(:checked) ~ #collapsible{
+    display:none;
+    margin-top:0;
+}
+#collapse:checked + label:before{
+    position:relative;
+    right:calc(-160px);
+    opacity:1;
+
+}
+
