@@ -12,7 +12,6 @@ var app = express();
 var mysql = require('mysql');
 var util = require('util');
 var url = require('url');
-var path = require('path');
 var bodyParser = require('body-parser');
 
 /**
