@@ -1,0 +1,43 @@
+
+
+GET http://localhost:8081/api/movies
+
+###
+
+POST http://localhost:8081/api/addMovie Content-Type: application/json
+
+{
+
+    "Movie": {
+
+        "Name": "Movie name", "Genre": "Drama", "Duration": "1.20", "Description": "Liirum laarum", "Release_date": "2022-01-01",
+        "Place": "Finnkino", "Date": "2022-03-03", "Rating": "3", "Comments": "Nice"
+    }
+
+}
+
+###
+
+PUT http://localhost:8081/api/movies/watched/1 Content-Type: application/json
+
+{
+    "Place": "Finnkino", "Date": "2021-01-01", "Rating": "2", "Comments": "Fine!"
+
+}
+###
+
+PUT http://localhost:8081/api/movies/unwatched?id=1 Content-Type: application/json
+
+###
+
+DELETE http://localhost:8081/api/delete/1
+
+###
+
+GET http://localhost:8081/api/movies/name?name=Movie Name
+
+###
+
+GET http://localhost:8081/api/movies/rating?fromRating=1&toRating=5
+
+###

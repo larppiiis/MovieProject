@@ -52,66 +52,6 @@ con.connect(function(err) {
 });
 
 /**
- * Elokuvan haku nimen perusteella
- * (Käyttämätön)
- */
-app.get('/api/movies/name', function(req, res) {
-  console.log('Select movies by name');
-  var q = url.parse(req.url, true).query;
-  var name = q.name;
-  var alteredResult;
-  var string;
-  var sql = 'SELECT * FROM movie WHERE name = ?';
-
-  (async () => { // IIFE (Immediately Invoked Function Expression)
-    try {
-      const rows = await query(sql, [name]);
-      string = JSON.stringify(rows);
-      alteredResult = '{"numOfRows":' + rows.length + ',"rows":' + string + '}';
-      console.log(rows);
-      res.send(alteredResult);
-    } catch (err) {
-      console.log('Database error!' + err);
-    }
-  })();
-});
-
-/**
- *
- * Elokuvan haku arvostelun perusteella
- * (Käyttämätön)
- */
-app.get('/api/movies/rating', function(req, res) {
-  console.log('Get movies by rating');
-  var q = url.parse(req.url, true).query;
-  var fromRating = q.start;
-  var toRating = q.end;
-  var alteredResult;
-  var string;
-  console.log('Parametrit:' + fromRating + ' ' + toRating);
-
-  var sql = 'SELECT Movie.name, Movie.genre, Movie.duration, Movie.description,' +
-      ' Movie.release_date, Rating.rating, Rating.comments' +
-      ' FROM Rating, View, Movie WHERE Rating.view_id = View.view_id and View.movie_id = Movie.movie_id' +
-      ' and Rating.rating >= ? and Rating.rating <= ?' +
-      ' GROUP BY Name ORDER BY Rating.rating';
-
-  (async () => { // IIFE (Immediately Invoked Function Expression)
-    try {
-      const rows = await query(sql, [fromRating, toRating]);
-      string = JSON.stringify(rows);
-      alteredResult = '{"numOfRows":' + rows.length + ',"rows":' + string + '}';
-      console.log(rows);
-      res.send(alteredResult);
-    } catch (err) {
-      console.log('Database error!' + err);
-    } finally {
-      //con.end();
-    }
-  })();
-});
-
-/**
  * Kaikkien elokuvien haku
  */
 app.get('/api/movies', function(req, res) {
@@ -282,6 +222,66 @@ app.delete('/api/delete/:movie_id', function(req, res) {
       res.send(rows);
     } catch (err) {
       console.log('Delete was not succesful!' + err);
+    }
+  })();
+});
+
+/**
+ * Elokuvan haku nimen perusteella
+ * (Käyttämätön)
+ */
+app.get('/api/movies/name', function(req, res) {
+  console.log('Select movies by name');
+  var q = url.parse(req.url, true).query;
+  var name = q.name;
+  var alteredResult;
+  var string;
+  var sql = 'SELECT * FROM movie WHERE name = ?';
+
+  (async () => { // IIFE (Immediately Invoked Function Expression)
+    try {
+      const rows = await query(sql, [name]);
+      string = JSON.stringify(rows);
+      alteredResult = '{"numOfRows":' + rows.length + ',"rows":' + string + '}';
+      console.log(rows);
+      res.send(alteredResult);
+    } catch (err) {
+      console.log('Database error!' + err);
+    }
+  })();
+});
+
+/**
+ *
+ * Elokuvan haku arvostelun perusteella
+ * (Käyttämätön)
+ */
+app.get('/api/movies/rating', function(req, res) {
+  console.log('Get movies by rating');
+  var q = url.parse(req.url, true).query;
+  var fromRating = q.start;
+  var toRating = q.end;
+  var alteredResult;
+  var string;
+  console.log('Parametrit:' + fromRating + ' ' + toRating);
+
+  var sql = 'SELECT Movie.name, Movie.genre, Movie.duration, Movie.description,' +
+      ' Movie.release_date, Rating.rating, Rating.comments' +
+      ' FROM Rating, View, Movie WHERE Rating.view_id = View.view_id and View.movie_id = Movie.movie_id' +
+      ' and Rating.rating >= ? and Rating.rating <= ?' +
+      ' GROUP BY Name ORDER BY Rating.rating';
+
+  (async () => { // IIFE (Immediately Invoked Function Expression)
+    try {
+      const rows = await query(sql, [fromRating, toRating]);
+      string = JSON.stringify(rows);
+      alteredResult = '{"numOfRows":' + rows.length + ',"rows":' + string + '}';
+      console.log(rows);
+      res.send(alteredResult);
+    } catch (err) {
+      console.log('Database error!' + err);
+    } finally {
+      //con.end();
     }
   })();
 });
