@@ -1,3 +1,10 @@
+/**
+ *
+ * Popcorn Time-sovelluksen palvelin
+ * 24.4.2022
+ * @author Laura Immonen
+ *
+ */
 
 var express = require('express');
 var app = express();
@@ -8,7 +15,9 @@ var url = require('url');
 var path = require('path');
 var bodyParser = require('body-parser');
 
-//CORS
+/**
+ * Cors asetukset, kaikki sallitaan
+ */
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');
@@ -16,11 +25,19 @@ app.use(function(req, res, next) {
   next();
 });
 
+/**
+ *
+ * Asetukset client-puolelle asettamiselle
+ * ja json käsittelyä varten
+ */
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-//Yhteys tietokantaan
+/**
+ *
+ * Yhteys tietokantaan
+ */
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -35,7 +52,10 @@ con.connect(function(err) {
   console.log('Connected to MySQL!');
 });
 
-//Elokuvan haku nimen perusteella
+/**
+ * Elokuvan haku nimen perusteella
+ * (Käyttämätön)
+ */
 app.get('/api/movies/name', function(req, res) {
   console.log('Select movies by name');
   var q = url.parse(req.url, true).query;
@@ -57,7 +77,11 @@ app.get('/api/movies/name', function(req, res) {
   })();
 });
 
-//HAKU ARVOSTELUN PERUSTEELLA
+/**
+ *
+ * Elokuvan haku arvostelun perusteella
+ * (Käyttämätön)
+ */
 app.get('/api/movies/rating', function(req, res) {
   console.log('Get movies by rating');
   var q = url.parse(req.url, true).query;
@@ -88,7 +112,9 @@ app.get('/api/movies/rating', function(req, res) {
   })();
 });
 
-//Haetaan kaikki elokuvat
+/**
+ * Kaikkien elokuvien haku
+ */
 app.get('/api/movies', function(req, res) {
   console.log('Get all movies');
 
@@ -105,7 +131,9 @@ app.get('/api/movies', function(req, res) {
   })();
 });
 
-//Lisätään uusi elokuva
+/**
+ * Uuden elokuvan lisääminen
+ */
 app.post('/api/addMovie', urlencodedParser, function(req, res) {
   console.log('body: %j', req.body);
   // get JSON-object from the http-body
@@ -171,7 +199,9 @@ app.post('/api/addMovie', urlencodedParser, function(req, res) {
   }
 });
 
-//Jos elokuva on katsottu päivitetään loput taulut
+/**
+ * Kun elokuva katsottu (watched-nappia painettu), päivitetään view ja rating taulut
+ */
 app.put('/api/movies/watched/:movie_id', urlencodedParser, function(req, res) {
   console.log('body: %j', req.body);
   var movieid = req.params.movie_id;
@@ -201,54 +231,10 @@ app.put('/api/movies/watched/:movie_id', urlencodedParser, function(req, res) {
   })();
 });
 
-//Poistaa elokuvan (ja muut taulut)
-app.delete('/api/delete/:movie_id', function(req, res) {
-  console.log('Delete movie');
-  var movie_id = req.params.movie_id;
-  var string;
-  var sql = 'DELETE FROM movie WHERE movie_id = ?';
-  (async () => { // IIFE (Immediately Invoked Function Expression)
-    try {
-      const rows = await query(sql, [movie_id]);
-      string = JSON.stringify(rows);
-      console.log(string);
-      res.send(rows);
-    } catch (err) {
-      console.log('Delete was not succesful!' + err);
-    }
-  })();
-});
-
-//Päivitetään onko katsottu
-//Haku pitää olla mallia localhost:8081/api/update?watched=1&id=1
-
-//KORJAA VIEW JA RATING TAULUN PÄIVITTÄMINEN
-app.put('/api/update', function(req, res) {
-  console.log('Update movie');
-  var q = url.parse(req.url, true).query;
-  var movieid = q.id;
-  var is_watched = q.watched;
-  var alteredResult;
-  var string;
-  console.log('Parametrit:' + movieid + ' ' + is_watched);
-  var sql = 'UPDATE Movie SET is_watched = ? WHERE movie_id = ?';
-
-  (async () => { // IIFE (Immediately Invoked Function Expression)
-    try {
-      const rows = await query(sql, [is_watched, movieid]);
-      string = JSON.stringify(rows);
-      alteredResult = '{"Updated movie with id":' + movieid + ',"rows":' +
-          string + '}';
-      console.log(alteredResult);
-      res.send(rows);
-    } catch (err) {
-      console.log('Update was not succesful!' + err);
-    }
-  })();
-});
-
+/**
+ * Kun unwatched-nappia painetaan, poistetaan view ja rating tauluista tiedot
+ */
 //Haku pitää olla mallia localhost:8081/api/movies/unwatched?id=1
-//KORJAA VIEW JA RATING TAULUN PÄIVITTÄMINEN
 app.put('/api/movies/unwatched', function(req, res) {
   console.log('Update movie');
   var q = url.parse(req.url, true).query;
@@ -279,6 +265,31 @@ app.put('/api/movies/unwatched', function(req, res) {
     }
   })();
 });
+
+
+/**
+ * Poistetaan elokuva ja siihen liittyvät taulut
+ */
+app.delete('/api/delete/:movie_id', function(req, res) {
+  console.log('Delete movie');
+  var movie_id = req.params.movie_id;
+  var string;
+  var sql = 'DELETE FROM movie WHERE movie_id = ?';
+  (async () => { // IIFE (Immediately Invoked Function Expression)
+    try {
+      const rows = await query(sql, [movie_id]);
+      string = JSON.stringify(rows);
+      console.log(string);
+      res.send(rows);
+    } catch (err) {
+      console.log('Delete was not succesful!' + err);
+    }
+  })();
+});
+
+/**
+ * Portin määrittelyä
+ */
 var server = app.listen(8081, function() {
   var host = server.address().address;
   var port = server.address().port;
