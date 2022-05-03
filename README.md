@@ -7,4 +7,5 @@
 ### - Teemu Pennanen
 ### - Aleksi Alanko
 
-[REST-API](https://github.com/larppiiis/MovieProject/blob/master/requests.rest)
+
+### [REST-API](https://github.com/larppiiis/MovieProject/blob/master/requests.rest)
