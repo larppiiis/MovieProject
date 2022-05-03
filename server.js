@@ -40,7 +40,7 @@ app.use(bodyParser.json());
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'Zorro',
   database: 'moviedb',
 });
 
@@ -192,13 +192,15 @@ app.put('/api/movies/unwatched', function(req, res) {
           'SELECT View_id FROM View WHERE Movie_id = ?', movieid);
       let viewid = viewidquery[0].View_id;
       const rows = await query(sql, movieid);
-      const bla = await query(unwatched, movieid);
+      const unwatched2 = await query(unwatched, movieid);
       await query(deleteRating, viewid);
       string = JSON.stringify(rows);
       alteredResult = '{"Updated movie with id":' + movieid + ',"rows":' +
           string + '}';
-      console.log(alteredResult);
-      res.send(bla);
+      const lol = 'SELECT Name, Genre, Duration, Description FROM Movie WHERE Movie_id = ?'
+      const l = await query(lol, movieid);
+      console.log(l);
+      res.send(l);
     } catch (err) {
       console.log('Update was not succesful!' + err);
     }

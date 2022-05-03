@@ -1,7 +1,6 @@
 
 <template>
 
-  <!-- Tän divin voi poistaa, kun muokkaa sivun ulkoasua -->
   <div class="container p-5">
     <h1></h1>
     <h2></h2>
@@ -23,7 +22,7 @@
 </template>
 <script>
 
-//importing bootstrap 5
+//bootstrap 5
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import MovieTable from './components/MovieTable.vue';
@@ -43,6 +42,10 @@ export default {
     this.getMovies();
   },
   methods: {
+    /**
+     * Hakee kaikki elokuvat
+     * @returns {Promise<void>} koko lista
+     */
     async getMovies() {
       try {
         const response = await fetch('http://localhost:8081/api/movies');
@@ -52,6 +55,11 @@ export default {
         console.error(error);
       }
     },
+    /**
+     * Lisaa elokuvan listaan
+     * @param movie lisattava elokuva
+     * @returns {Promise<void>} palauttaa listan
+     */
     async addMovie(movie) {
       try {
         const response = await fetch('http://localhost:8081/api/addMovie', {
@@ -65,6 +73,11 @@ export default {
         console.error(error);
       }
     },
+    /**
+     * Poistaa elokuvan
+     * @param Movie_id poistettavan elokuvan id
+     * @returns {Promise<void>} filtteroity lista elokuvista
+     */
     async deleteMovie(Movie_id) {
       try {
         await fetch(`http://localhost:8081/api/delete/${Movie_id}`, {
@@ -75,6 +88,13 @@ export default {
         console.error(error);
       }
     },
+    /**
+     *
+     * Merkitsee elokuvan katsotuksi
+     * @param Movie_id elokuvan id
+     * @param updatedMovie paivitetty elokuva
+     * @returns {Promise<void>} palauttaa paivitetyn elokuvan kaikki taulut
+     */
     async watchedMovie(Movie_id, updatedMovie) {
       try {
         const response = await fetch(`http://localhost:8081/api/movies/watched/${Movie_id}`, {
@@ -84,11 +104,17 @@ export default {
         });
         const data = await response.json();
         this.movies = this.movies.map(movie => movie.Movie_id === Movie_id ? data : movie);
-        this.movies = this.getMovies();
       } catch (error) {
         console.error(error);
       }
     },
+    /**
+     *
+     * Tekee elokuvasta ei katsotun.
+     * @param Movie_id elokuvan id
+     * @param updatedMovie paivitetty elokuva
+     * @returns {Promise<void>} palauttaa paivitetyn elokuvan movie-taulun tiedot
+     */
     async unWatchedMovie(Movie_id, updatedMovie) {
       try {
         const response = await fetch(`http://localhost:8081/api/movies/unwatched?id=${Movie_id}`, {
@@ -97,8 +123,7 @@ export default {
           headers: {'Content-type': 'application/json'},
         });
         const data = await response.json();
-        this.movies = this.movies.map(movie => movie.Movie_id === Movie_id ? data : movie);
-        this.movies = this.getMovies();
+        this.movies = this.movies.map(movie => movie.Movie_id === Movie_id ? data[0] : movie);
       } catch (error) {
         console.error(error);
       }

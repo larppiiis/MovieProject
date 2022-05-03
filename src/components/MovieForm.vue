@@ -18,6 +18,7 @@
                 <input ref="first"
                        type="text"
                        :class="{ 'has-error': submitting && invalidName }"
+                       class="input_form"
                        v-model="movie.Name"
                        @focus="clearStatus"
                        @keypress="clearStatus"
@@ -30,15 +31,18 @@
                     :class="{ 'has-error': submitting && invalidGenre }"
                     v-model="movie.Genre"
                     @focus="clearStatus"
+                    class="input_form"
                 />
               </div>
               <div class="mb-3">
                 <label>Duration</label>
                 <input
-                    type="text"
+                    type="number"
+                    step="0.01"
                     :class="{ 'has-error': submitting && invalidDuration}"
                     v-model="movie.Duration"
                     @focus="clearStatus"
+                    class="input_form"
                 />
               </div>
               <div class="mb-3">
@@ -48,6 +52,7 @@
                     :class="{ 'has-error': submitting && invalidDescription }"
                     v-model="movie.Description"
                     @focus="clearStatus"
+                    class="input_form"
                 />
               </div>
 
@@ -60,6 +65,7 @@
                     :class="{ 'has-error': submitting && invalidRelease }"
                     v-model="movie.Release_date"
                     @focus="clearStatus"
+                    class="input_form"
                 />
               </div>
 
@@ -85,7 +91,7 @@
                            v-model="movie.Place"
                            @focus="clearStatus"
                            @keypress="clearStatus"
-                           class="form-control"
+                           class="input_form"
 
                     />
                   </div>
@@ -95,7 +101,7 @@
                         type="Date"
                         v-model="movie.Date"
                         @focus="clearStatus"
-                        class="form-control"
+                        class="input_form"
                     />
                   </div>
                   <div class="mb-3">
@@ -104,14 +110,14 @@
                         type="number"
                         min="1"
                         max="5"
-                        :class="{ 'has-error': submitting && invalidRating}" class="form-control"
+                        :class="{ 'has-error': submitting && invalidRating}" class="input_form"
                         v-model="movie.Rating"
                         @focus="clearStatus"
                     />
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Comments</label>
-                    <textarea class="form-control" v-model="movie.Comments" @focus="clearStatus"></textarea>
+                    <textarea class="textarea_form" v-model="movie.Comments" @focus="clearStatus"></textarea>
                   </div>
                 </div>
               </div>
@@ -149,6 +155,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * Nappi elokuvan lisaamiselle ja sen validointi
+     */
     handleSubmit() {
       this.clearStatus();
       this.submitting = true;
@@ -179,18 +188,38 @@ export default {
     },
   },
   computed: {
+    /**
+     *
+     * @returns {boolean} onko nimi validi
+     */
     invalidName() {
       return this.movie.Name === ''
     },
+    /**
+     *
+     * @returns {boolean} onko genre validi
+     */
     invalidGenre() {
       return this.movie.Genre === ''
     },
+    /**
+     *
+     * @returns {boolean} onko elokuvan pituus validi
+     */
     invalidDuration() {
       return this.movie.Duration === ''
     },
+    /**
+     *
+     * @returns {boolean} onko kuvaus validi
+     */
     invalidDescription() {
       return this.movie.Description === ''
     },
+    /**
+     *
+     * @returns {boolean} onko paivamaara validi
+     */
     invalidRelease() {
       return this.movie.Release_date === ''
     },
