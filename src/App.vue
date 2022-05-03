@@ -28,12 +28,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import MovieTable from './components/MovieTable.vue';
 import MovieForm from './components/MovieForm.vue';
-import WatchedForm from './components/WatchedForm.vue';
+
 export default {
   components: {
     MovieTable,
     MovieForm,
-    WatchedForm,
   },
   data() {
     return {

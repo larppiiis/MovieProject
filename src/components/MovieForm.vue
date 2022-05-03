@@ -1,68 +1,86 @@
 <template>
-  <!-- TÄMÄ TURHA, TOISTAISEKSI JÄTETTY-->
-  <div id="watched-form">
-    <div class="modal fade" id="watchedModal" tabindex="-1" aria-labelledby="watchedModalLabel" aria-hidden="true">
+
+  <div id="movie-form">
+    <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-danger" id="watchedModalLabel">Add new view</h5>
+            <h5 class="modal-title text-danger" id="movieModalLabel">Add a new movie</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form @submit.prevent="handleSubmit">
-              <div id="watched-form1">{{ movie.movie_id }}</div>
               <div class="mb-3">
-                <label class="form-label">Place</label>
+                <label>Movie name</label>
                 <input ref="first"
                        type="text"
-                       v-model="movie.Place"
+                       :class="{ 'has-error': submitting && invalidName }"
+                       v-model="movie.Name"
                        @focus="clearStatus"
                        @keypress="clearStatus"
-                       class="form-control"
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Date</label>
+                <label>Genre</label>
                 <input
-                    type="Date"
-                    v-model="movie.Date"
+                    type="text"
+                    :class="{ 'has-error': submitting && invalidGenre }"
+                    v-model="movie.Genre"
                     @focus="clearStatus"
-                    class="form-control"
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Rating 1-5</label>
+                <label>Duration</label>
                 <input
-                    type="number"
-                    min="1"
-                    max="5"
-                    :class="{ 'has-error': submitting && invalidRating}" class="form-control"
+                    type="text"
+                    :class="{ 'has-error': submitting && invalidDuration}"
+                    v-model="movie.Duration"
+                    @focus="clearStatus"
+                />
+              </div>
+              <div class="mb-3">
+                <label>Rating</label>
+                <input
+                    type="text"
+                    :class="{ 'has-error': submitting }"
                     v-model="movie.Rating"
                     @focus="clearStatus"
                 />
               </div>
+
               <div class="mb-3">
-                <label class="form-label">Comments</label>
-                <textarea class="form-control" v-model="movie.Comments" @focus="clearStatus"></textarea>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Watched?</label>
+                <label>Watched?</label>
+
                 <input
                     type="checkbox"
-                    v-model="movie.is_watched.checked"
+                    id="collapse"
+                    :class="{ 'has-error': submitting}"
+                    v-model="movie.is_watched"
                     @focus="clearStatus"
-                    checked
-                    disabled
                 />
+                <div id="collapsible">
+
+                  <label>testi</label>
+                  <input
+                      type="text"
+                      :class="{ 'has-error': submitting }"
+                      v-model="movie.Rating"
+                      @focus="clearStatus"
+                  />
+
+                </div>
+
+
+
               </div>
 
-              <p v-if="error && submitting" class="error-message">❗Please fill out rating required field</p>
+              <p v-if="error && submitting" class="error-message">❗Please fill out all required fields</p>
               <p v-if="success" class="success-message">✅ Movie successfully added</p>
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" id="submitbutton" class="btn btn-primary"></button>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="closebutton" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -72,7 +90,7 @@
 
 <script>
 export default {
-  name: 'watched-form',
+  name: 'movie-form',
   data() {
     return {
       submitting: false,
@@ -93,12 +111,12 @@ export default {
       this.clearStatus();
       this.submitting = true;
 
-      if (this.invalidRating) {
+      if (this.invalidName || this.invalidGenre || this.invalidDuration) {
         this.error = true;
         return;
       }
 
-      this.$emit('edit:movie', this.movie);
+      this.$emit('add:movie', this.movie);
       this.$refs.first.focus();
       this.movie = {
         Name: '',
@@ -118,8 +136,15 @@ export default {
     },
   },
   computed: {
-    invalidRating() {
-      return this.movie.Rating === '';
+    invalidName() {
+      return this.movie.Name === '';
+    },
+
+    invalidGenre() {
+      return this.movie.Genre === '';
+    },
+    invalidDuration() {
+      return this.movie.Duration === '';
     },
   },
 };
